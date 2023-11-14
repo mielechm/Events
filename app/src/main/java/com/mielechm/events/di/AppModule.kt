@@ -1,7 +1,9 @@
 package com.mielechm.events.di
 
 import com.mielechm.events.data.remote.EventsApi
+import com.mielechm.events.data.remote.ScheduleApi
 import com.mielechm.events.repository.EventsRepositoryImpl
+import com.mielechm.events.repository.ScheduleRepositoryImpl
 import com.mielechm.events.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -34,5 +36,23 @@ object AppModule {
     @Singleton
     @Provides
     fun provideEventsRepository(api: EventsApi) = EventsRepositoryImpl(api)
+
+    @Singleton
+    @Provides
+    fun provideScheduleApi(): ScheduleApi {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        val okHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+        return Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .build()
+            .create(ScheduleApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideScheduleRepository(api: ScheduleApi) = ScheduleRepositoryImpl(api)
 
 }
