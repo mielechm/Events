@@ -1,5 +1,6 @@
 package com.mielechm.events.ui.views.eventslist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,11 +27,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.mielechm.events.data.model.EventListEntry
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @Composable
 fun EventsListScreen(
     navController: NavController,
-    viewModel: EventsListViewModel = hiltViewModel()
 ) {
 
     Surface(color = MaterialTheme.colorScheme.background) {
@@ -50,7 +52,7 @@ fun EventsList(navController: NavController, viewModel: EventsListViewModel = hi
 
     LazyColumn(contentPadding = PaddingValues(16.dp)) {
 
-        itemsIndexed(events, key = { index, event -> event.id }) { index, event ->
+        itemsIndexed(events, key = { _, event -> event.id }) { _, event ->
             EventEntry(event = event, navController = navController)
         }
     }
@@ -74,7 +76,12 @@ fun EventsList(navController: NavController, viewModel: EventsListViewModel = hi
 
 @Composable
 fun EventEntry(event: EventListEntry, navController: NavController) {
-    Column(modifier = Modifier.fillMaxHeight()) {
+    Column(modifier = Modifier
+        .fillMaxHeight()
+        .clickable {
+            val encode = URLEncoder.encode(event.videoUrl, StandardCharsets.UTF_8.toString())
+            navController.navigate("playback_screen/$encode")
+        }) {
         Row {
             Column(
                 modifier = Modifier

@@ -36,7 +36,7 @@ class EventsListViewModel @Inject constructor(private val repositoryImpl: Events
                             title = event.title,
                             subtitle = event.subtitle,
                             imageUrl = event.imageUrl,
-                            videoUrl = event.videoUrl ?: null
+                            videoUrl = event.videoUrl ?: ""
                         )
                     }
                     loadError.value = ""

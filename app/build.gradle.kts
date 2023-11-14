@@ -81,7 +81,7 @@ dependencies {
 
     //Dagger - Hilt
     val hiltVersion = "2.48.1"
-    implementation ("com.google.dagger:hilt-android:$hiltVersion")
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
     ksp("com.google.dagger:hilt-compiler:$hiltVersion")
     ksp("com.google.dagger:dagger-compiler:$hiltVersion")
     val androidxHiltVersion = "1.1.0"
@@ -90,6 +90,12 @@ dependencies {
 
     //Icons
     implementation("androidx.compose.material:material-icons-extended:1.5.4")
+
+    // Media3
+    val media3Version = "1.1.1"
+    implementation("androidx.media3:media3-exoplayer:$media3Version")
+    implementation("androidx.media3:media3-datasource-okhttp:$media3Version")
+    implementation("androidx.media3:media3-ui:$media3Version")
 
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.5")
